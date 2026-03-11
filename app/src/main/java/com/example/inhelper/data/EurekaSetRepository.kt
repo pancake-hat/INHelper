@@ -16,6 +16,10 @@ class EurekaSetRepository @Inject constructor(
         eurekaSetDao.upsert(eurekaSet)
     }
 
+    suspend fun updateEurekaSets(eurekaSets: List<EurekaSet>) {
+        eurekaSetDao.upsertAll(eurekaSets)
+    }
+
     companion object {
         @Volatile private var instance: EurekaSetRepository? = null
 

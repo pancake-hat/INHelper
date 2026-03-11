@@ -1,10 +1,12 @@
 package com.example.inhelper.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inhelper.data.EurekaSet
 import com.example.inhelper.data.EurekaSetRepository
+import com.example.inhelper.utils.EurekaCSVImport
 import com.example.inhelper.utils.MAX_EUREKA_COUNT_PER_SET
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,6 +51,15 @@ class EurekaListViewModel @Inject internal constructor(
     fun updateEurekaSet(eurekaSet: EurekaSet) {
         viewModelScope.launch {
             eurekaSetRepository.updateEurekaSet(eurekaSet)
+        }
+    }
+
+    fun importEurekaSets(context: Context) {
+        viewModelScope.launch {
+            val importedSets = EurekaCSVImport.readImportedJsonFile(context)
+            if (importedSets != null) {
+                eurekaSetRepository.updateEurekaSets(importedSets)
+            }
         }
     }
 

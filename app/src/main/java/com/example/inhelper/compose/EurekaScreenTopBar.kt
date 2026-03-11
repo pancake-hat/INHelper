@@ -1,11 +1,15 @@
 package com.example.inhelper.compose
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRight
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +25,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.inhelper.utils.EurekaCSVImport
+import com.example.inhelper.viewmodels.EurekaListViewModel
 import com.example.inhelper.viewmodels.EurekaSortType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,6 +47,7 @@ fun EurekaScreenTopBar(
             Text(text = "Eureka Tracker: $totalObtained/$maxObtained")
         },
         actions = {
+            ImportEurekaAction()
             LockEurekaAction(
                 isLocked = isEurekaLocked,
                 onToggle = onLockToggled,
@@ -54,6 +63,63 @@ fun EurekaScreenTopBar(
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
+}
+
+@Composable
+private fun ImportEurekaAction() {
+    var expanded by remember { mutableStateOf(false) }
+    val onImportClick = tryImportEurekaCSV()
+    
+    Box {
+        IconButton(onClick = {expanded = !expanded}) {
+            Icon(
+                imageVector = Icons.Default.UploadFile,
+                contentDescription = "Import CSV"
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(
+                text = { Text("Import Eureka CSV") },
+                onClick = {
+                    onImportClick()
+                    expanded = false
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.UploadFile,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun tryImportEurekaCSV(): () -> Unit {
+    val context = LocalContext.current
+    val viewModel: EurekaListViewModel = hiltViewModel()
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            val result = EurekaCSVImport.createImportedJsonFile(context, uri)
+            if (result != null) {
+                Toast.makeText(context, "Import successful", Toast.LENGTH_SHORT).show()
+                viewModel.importEurekaSets(context)
+            }
+        } else {
+            Toast.makeText(context, "Import failed", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    return {
+        launcher.launch("text/comma-separated-values")
+    }
 }
 
 @Composable
@@ -82,7 +148,6 @@ private fun SortMenuAction(
     onSortSelected: (EurekaSortType) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-
     Box {
         IconButton(onClick = { expanded = !expanded }) {
             Icon(
