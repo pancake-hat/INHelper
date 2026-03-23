@@ -1,25 +1,19 @@
 package com.example.inhelper.data.local
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
-import androidx.work.workDataOf
 import com.example.inhelper.data.local.dao.EurekaSetDao
 import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.utils.EUREKA_DATABASE_NAME
-import com.example.inhelper.utils.EUREKA_SETS_DATA_FILENAME
 import com.example.inhelper.workers.SeedDatabaseWorker
-import com.example.inhelper.workers.SeedDatabaseWorker.Companion.KEY_SETS_FILENAME
 import com.example.inhelper.workers.SeedDatabaseWorker.Companion.SEED_DATABASE_WORKER_NAME
-import java.util.concurrent.TimeUnit
 
 @Database(entities = [EurekaSet::class], version = 1, exportSchema = false)
 @TypeConverters(EurekaTypeConverters::class)
@@ -27,6 +21,8 @@ abstract class EurekaDatabase: RoomDatabase() {
     abstract fun eurekaSetDao(): EurekaSetDao
 
     companion object {
+        private const val TAG = "EurekaDatabase"
+
         @Volatile
         private var instance: EurekaDatabase? = null
 
@@ -42,19 +38,12 @@ abstract class EurekaDatabase: RoomDatabase() {
                     object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
-                                .setInputData(workDataOf(KEY_SETS_FILENAME to EUREKA_SETS_DATA_FILENAME))
-                                .setBackoffCriteria(
-                                    BackoffPolicy.EXPONENTIAL,
-                                    WorkRequest.MIN_BACKOFF_MILLIS,
-                                    TimeUnit.MILLISECONDS
-                                )
-                                .build()
-                            
+                            Log.d(TAG, "Database created, enqueuing seed worker")
+
                             WorkManager.getInstance(context).enqueueUniqueWork(
                                 SEED_DATABASE_WORKER_NAME,
-                                ExistingWorkPolicy.KEEP,
-                                request
+                                ExistingWorkPolicy.REPLACE,
+                                SeedDatabaseWorker.buildWorkRequest()
                             )
                         }
                     }

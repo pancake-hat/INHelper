@@ -22,6 +22,8 @@ class EurekaSetRepository @Inject constructor(
         eurekaSetDao.upsertAll(eurekaSets)
     }
 
+    suspend fun getEurekaSetsCount(): Int = eurekaSetDao.count()
+
     companion object {
         @Volatile private var instance: EurekaSetRepository? = null
 

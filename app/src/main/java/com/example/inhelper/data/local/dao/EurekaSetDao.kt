@@ -23,4 +23,7 @@ interface EurekaSetDao {
 
     @Query("SELECT * FROM eureka_sets WHERE set_name = :name")
     fun getSet(name: EurekaSetName): Flow<EurekaSet>
+
+    @Query("SELECT COUNT(*) FROM eureka_sets")
+    suspend fun count(): Int
 }

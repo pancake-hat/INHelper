@@ -1,5 +1,8 @@
 package com.example.inhelper.features.eureka
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -18,7 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.features.eureka.components.EurekaListView
 import com.example.inhelper.features.eureka.components.EurekaScreenTopBar
-import com.example.inhelper.features.eureka.components.rememberEurekaImportLauncher
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun EurekaScreen(
@@ -36,9 +40,21 @@ fun EurekaScreen(
     val animationController = remember(scope, bounceOffset) {
         BounceAnimation(scope, bounceOffset)
     }
-    
-    val importLauncher = rememberEurekaImportLauncher {
-        viewModel.importEurekaSets(context)
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collectLatest { event ->
+            when (event) {
+                is EurekaUiEvent.ShowToast -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let { viewModel.importFromUri(it, context) }
     }
 
     Scaffold(
@@ -51,7 +67,7 @@ fun EurekaScreen(
                 onLockToggled = { viewModel.setEurekaLocked(it) },
                 sortType = sortType,
                 onSortSelected = { viewModel.setSortType(it) },
-                onImportClicked = importLauncher,
+                onImportClicked = { importLauncher.launch("text/comma-separated-values") },
                 animationController = animationController
             )
         }

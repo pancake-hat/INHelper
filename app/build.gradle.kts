@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.retrofit2)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     // Room
     implementation(libs.androidx.room.runtime)
