@@ -38,7 +38,7 @@ fun EurekaScreen(
     val bounceOffset = remember { Animatable(0f) }
 
     val animationController = remember(scope, bounceOffset) {
-        BounceAnimation(scope, bounceOffset)
+        ShakeAnimation(scope, bounceOffset)
     }
 
     LaunchedEffect(Unit) {

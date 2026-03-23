@@ -11,26 +11,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Immutable
-class BounceAnimation(
+class ShakeAnimation(
     private val scope: CoroutineScope,
-    private val bounceOffset: Animatable<Float, AnimationVector1D>
+    private val offset: Animatable<Float, AnimationVector1D>
 ) {
     val modifier: Modifier
-        get() = Modifier.offset(x = bounceOffset.value.dp)
+        get() = Modifier.offset(x = offset.value.dp)
 
     fun applyBounceAnimation() {
         scope.launch {
             repeat(3) {
-                bounceOffset.animateTo(
-                    targetValue = 10f,
+                offset.animateTo(
+                    targetValue = 3f,
                     animationSpec = tween(durationMillis = 50)
                 )
-                bounceOffset.animateTo(
-                    targetValue = -10f,
+                offset.animateTo(
+                    targetValue = -3f,
                     animationSpec = tween(durationMillis = 50)
                 )
             }
-            bounceOffset.animateTo(
+            offset.animateTo(
                 targetValue = 0f,
                 animationSpec = tween(durationMillis = 50)
             )
