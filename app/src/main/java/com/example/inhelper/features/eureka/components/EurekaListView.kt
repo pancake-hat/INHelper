@@ -1,4 +1,4 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,11 +9,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.inhelper.data.EurekaSet
-import com.example.inhelper.utils.EurekaSetName
+import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.features.eureka.EurekaSortType
 import com.example.inhelper.ui.theme.INHelperTheme
+import com.example.inhelper.utils.EurekaSetName
 import com.example.inhelper.utils.getPreviewEureka
-import com.example.inhelper.viewmodels.EurekaSortType
 
 @Composable
 fun EurekaListView(

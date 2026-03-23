@@ -1,4 +1,4 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

@@ -1,11 +1,11 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.inhelper.data.EurekaSet
+import com.example.inhelper.data.local.entities.EurekaSet
 
 @Composable
 fun ColorCheckboxListView(

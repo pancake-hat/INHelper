@@ -1,11 +1,11 @@
-package com.example.inhelper.viewmodels
+package com.example.inhelper.features.eureka
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inhelper.data.EurekaSet
-import com.example.inhelper.data.EurekaSetRepository
+import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.data.repository.EurekaSetRepository
 import com.example.inhelper.utils.EurekaCSVImport
 import com.example.inhelper.utils.MAX_EUREKA_COUNT_PER_SET
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ enum class EurekaSortType {
 }
 
 @HiltViewModel
-class EurekaListViewModel @Inject internal constructor(
+class EurekaViewModel @Inject internal constructor(
     private val eurekaSetRepository: EurekaSetRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {

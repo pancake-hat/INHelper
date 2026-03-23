@@ -1,4 +1,4 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka.components
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -26,10 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.inhelper.features.eureka.BounceAnimation
+import com.example.inhelper.features.eureka.EurekaSortType
 import com.example.inhelper.utils.EurekaCSVImport
-import com.example.inhelper.viewmodels.EurekaListViewModel
-import com.example.inhelper.viewmodels.EurekaSortType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +39,7 @@ fun EurekaScreenTopBar(
     onLockToggled: (Boolean) -> Unit,
     sortType: EurekaSortType,
     onSortSelected: (EurekaSortType) -> Unit,
+    onImportClicked: () -> Unit,
     animationController: BounceAnimation
 ) { 
     TopAppBar(
@@ -47,7 +47,7 @@ fun EurekaScreenTopBar(
             Text(text = "Eureka Tracker: $totalObtained/$maxObtained")
         },
         actions = {
-            ImportEurekaAction()
+            ImportEurekaAction(onImportClicked = onImportClicked)
             LockEurekaAction(
                 isLocked = isEurekaLocked,
                 onToggle = onLockToggled,
@@ -66,9 +66,8 @@ fun EurekaScreenTopBar(
 }
 
 @Composable
-private fun ImportEurekaAction() {
+private fun ImportEurekaAction(onImportClicked: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    val onImportClick = tryImportEurekaCSV()
     
     Box {
         IconButton(onClick = {expanded = !expanded}) {
@@ -84,7 +83,7 @@ private fun ImportEurekaAction() {
             DropdownMenuItem(
                 text = { Text("Import Eureka CSV") },
                 onClick = {
-                    onImportClick()
+                    onImportClicked()
                     expanded = false
                 },
                 leadingIcon = {
@@ -100,9 +99,10 @@ private fun ImportEurekaAction() {
 }
 
 @Composable
-private fun tryImportEurekaCSV(): () -> Unit {
+fun rememberEurekaImportLauncher(
+    onImportSuccess: () -> Unit
+): () -> Unit {
     val context = LocalContext.current
-    val viewModel: EurekaListViewModel = hiltViewModel()
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -110,7 +110,7 @@ private fun tryImportEurekaCSV(): () -> Unit {
             val result = EurekaCSVImport.createImportedJsonFile(context, uri)
             if (result != null) {
                 Toast.makeText(context, "Import successful", Toast.LENGTH_SHORT).show()
-                viewModel.importEurekaSets(context)
+                onImportSuccess()
             }
         } else {
             Toast.makeText(context, "Import failed", Toast.LENGTH_SHORT).show()

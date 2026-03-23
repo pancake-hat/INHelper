@@ -1,4 +1,4 @@
-package com.example.inhelper.data
+package com.example.inhelper.data.local
 
 import android.content.Context
 import androidx.room.TypeConverter

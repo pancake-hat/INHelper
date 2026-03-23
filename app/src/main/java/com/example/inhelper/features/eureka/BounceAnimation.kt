@@ -1,41 +1,39 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.offset
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-const val BOUNCE_ANIMATION_DURATION = 100
-const val BOUNCE_REPEAT_COUNT = 3
-const val BOUNCE_MIN_OFFSET = -5f
-const val BOUNCE_MAX_OFFSET = 0f
-
+@Immutable
 class BounceAnimation(
     private val scope: CoroutineScope,
     private val bounceOffset: Animatable<Float, AnimationVector1D>
 ) {
     val modifier: Modifier
-        get() = Modifier.offset(
-            x = 0.dp,
-            y = bounceOffset.value.dp
-        )
+        get() = Modifier.offset(x = bounceOffset.value.dp)
 
     fun applyBounceAnimation() {
         scope.launch {
-            repeat(BOUNCE_REPEAT_COUNT) {
+            repeat(3) {
                 bounceOffset.animateTo(
-                    targetValue = BOUNCE_MIN_OFFSET,
-                    animationSpec = tween(durationMillis = BOUNCE_ANIMATION_DURATION)
+                    targetValue = 10f,
+                    animationSpec = tween(durationMillis = 50)
                 )
                 bounceOffset.animateTo(
-                    targetValue = BOUNCE_MAX_OFFSET,
-                    animationSpec = tween(durationMillis = BOUNCE_ANIMATION_DURATION)
+                    targetValue = -10f,
+                    animationSpec = tween(durationMillis = 50)
                 )
             }
+            bounceOffset.animateTo(
+                targetValue = 0f,
+                animationSpec = tween(durationMillis = 50)
+            )
         }
     }
 }

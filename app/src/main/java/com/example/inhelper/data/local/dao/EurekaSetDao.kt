@@ -1,9 +1,11 @@
-package com.example.inhelper.data
+package com.example.inhelper.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.TypeConverters
 import androidx.room.Upsert
+import com.example.inhelper.data.local.EurekaTypeConverters
+import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.utils.EurekaSetName
 import kotlinx.coroutines.flow.Flow
 

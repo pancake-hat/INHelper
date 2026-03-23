@@ -1,14 +1,14 @@
 package com.example.inhelper.di
 
 import android.content.Context
-import com.example.inhelper.data.EurekaDatabase
-import com.example.inhelper.data.EurekaSetDao
+import com.example.inhelper.data.local.EurekaDatabase
+import com.example.inhelper.data.local.dao.EurekaSetDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import jakarta.inject.Singleton
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module

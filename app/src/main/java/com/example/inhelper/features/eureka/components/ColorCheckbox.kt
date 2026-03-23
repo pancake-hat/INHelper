@@ -1,4 +1,4 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
@@ -21,8 +21,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.inhelper.utils.EurekaColor
 import com.example.inhelper.R
+import com.example.inhelper.utils.EurekaColor
 
 @Composable
 fun ColorCheckbox(

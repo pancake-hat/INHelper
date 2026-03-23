@@ -5,8 +5,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.inhelper.R
-import com.example.inhelper.data.EurekaSet
-import com.example.inhelper.data.EurekaTypeConverters
+import com.example.inhelper.data.local.EurekaTypeConverters
+import com.example.inhelper.data.local.entities.EurekaSet
 
 @Composable
 fun getEurekaPainter(resName: String?): Painter {

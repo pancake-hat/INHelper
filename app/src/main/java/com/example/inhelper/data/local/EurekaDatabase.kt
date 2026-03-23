@@ -1,4 +1,4 @@
-package com.example.inhelper.data
+package com.example.inhelper.data.local
 
 import android.content.Context
 import androidx.room.Database
@@ -12,6 +12,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.workDataOf
+import com.example.inhelper.data.local.dao.EurekaSetDao
+import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.utils.EUREKA_DATABASE_NAME
 import com.example.inhelper.utils.EUREKA_SETS_DATA_FILENAME
 import com.example.inhelper.workers.SeedDatabaseWorker

@@ -1,5 +1,4 @@
-package com.example.inhelper.compose
-
+package com.example.inhelper.features.eureka.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.inhelper.data.EurekaSet
+import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.utils.EurekaType
 import com.example.inhelper.utils.getEurekaPainter
 

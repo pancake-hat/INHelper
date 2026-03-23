@@ -1,4 +1,4 @@
-package com.example.inhelper.compose
+package com.example.inhelper.features.eureka.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.inhelper.data.EurekaSet
+import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.ui.theme.INHelperTheme
 import com.example.inhelper.utils.EurekaType
 import com.example.inhelper.utils.getPreviewEureka

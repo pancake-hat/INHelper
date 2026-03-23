@@ -1,5 +1,7 @@
-package com.example.inhelper.data
+package com.example.inhelper.data.repository
 
+import com.example.inhelper.data.local.dao.EurekaSetDao
+import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.utils.EurekaSetName
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

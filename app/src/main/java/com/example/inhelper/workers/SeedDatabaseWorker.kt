@@ -4,31 +4,33 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.inhelper.data.EurekaDatabase
-import com.example.inhelper.data.EurekaSet
+import com.example.inhelper.data.local.dao.EurekaSetDao
+import com.example.inhelper.data.local.entities.EurekaSet
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class SeedDatabaseWorker(
-    context: Context,
-    params: WorkerParameters
-    ): CoroutineWorker(context, params) {
+class SeedDatabaseWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParams: WorkerParameters,
+    private val eurekaSetDao: EurekaSetDao
+) : CoroutineWorker(context, workerParams) {
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val filename = inputData.getString(KEY_SETS_FILENAME)
             if (filename != null) {
                 applicationContext.assets.open(filename).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
-                        val eurekaSetType = object : TypeToken<List<EurekaSet>>() {}.type
-                        val eurekaSetList: List<EurekaSet> = Gson().fromJson(jsonReader, eurekaSetType)
+                        val setType = object : TypeToken<List<EurekaSet>>() {}.type
+                        val setList: List<EurekaSet> = Gson().fromJson(jsonReader, setType)
 
-                        val database = EurekaDatabase.getInstance(applicationContext)
-                        database.eurekaSetDao().upsertAll(eurekaSetList)
-
+                        eurekaSetDao.upsertAll(setList)
                         Result.success()
                     }
                 }

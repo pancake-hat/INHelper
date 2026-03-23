@@ -1,4 +1,4 @@
-package com.example.inhelper.data
+package com.example.inhelper.data.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.example.inhelper.utils.EurekaColor
 import com.example.inhelper.utils.EurekaSetName
 
-// https://infinity-nikki.fandom.com/wiki/Eureka
 @Entity(tableName = "eureka_sets")
 data class EurekaSet(
     @PrimaryKey
