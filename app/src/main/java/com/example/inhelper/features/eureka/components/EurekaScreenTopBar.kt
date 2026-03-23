@@ -1,13 +1,11 @@
 package com.example.inhelper.features.eureka.components
 
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRight
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.DropdownMenu
@@ -26,10 +24,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.example.inhelper.features.eureka.ShakeAnimation
 import com.example.inhelper.features.eureka.EurekaSortType
-import com.example.inhelper.utils.EurekaCSVImport
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,11 +37,20 @@ fun EurekaScreenTopBar(
     sortType: EurekaSortType,
     onSortSelected: (EurekaSortType) -> Unit,
     onImportClicked: () -> Unit,
+    onOpenDrawer: () -> Unit,
     animationController: ShakeAnimation
 ) {
     TopAppBar(
         title = {
             Text(text = "Eureka Tracker: $totalObtained/$maxObtained")
+        },
+        navigationIcon = {
+            IconButton(onClick = onOpenDrawer) {
+                Icon(
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = "Menu"
+                )
+            }
         },
         actions = {
             LockEurekaAction(
@@ -64,30 +69,6 @@ fun EurekaScreenTopBar(
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
-}
-
-@Composable
-fun rememberEurekaImportLauncher(
-    onImportSuccess: () -> Unit
-): () -> Unit {
-    val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri ->
-        if (uri != null) {
-            val result = EurekaCSVImport.createImportedJsonFile(context, uri)
-            if (result != null) {
-                Toast.makeText(context, "Import successful", Toast.LENGTH_SHORT).show()
-                onImportSuccess()
-            }
-        } else {
-            Toast.makeText(context, "Import failed", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    return {
-        launcher.launch("text/comma-separated-values")
-    }
 }
 
 @Composable

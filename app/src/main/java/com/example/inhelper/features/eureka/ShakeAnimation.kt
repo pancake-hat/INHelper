@@ -18,7 +18,7 @@ class ShakeAnimation(
     val modifier: Modifier
         get() = Modifier.offset(x = offset.value.dp)
 
-    fun applyBounceAnimation() {
+    fun applyShakeAnimation() {
         scope.launch {
             repeat(3) {
                 offset.animateTo(

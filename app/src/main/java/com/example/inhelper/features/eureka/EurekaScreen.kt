@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun EurekaScreen(
+    onOpenDrawer: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: EurekaViewModel = hiltViewModel(),
 ) {
@@ -68,6 +69,7 @@ fun EurekaScreen(
                 sortType = sortType,
                 onSortSelected = { viewModel.setSortType(it) },
                 onImportClicked = { importLauncher.launch("text/comma-separated-values") },
+                onOpenDrawer = onOpenDrawer,
                 animationController = animationController
             )
         }
@@ -90,7 +92,7 @@ fun EurekaScreen(
                     if (!isEurekaLocked) {
                         viewModel.updateEurekaSet(it)
                     } else { // bounce lock icon
-                        animationController.applyBounceAnimation()
+                        animationController.applyShakeAnimation()
                     }
                 }
             )
