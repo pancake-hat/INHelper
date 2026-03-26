@@ -9,13 +9,16 @@ import com.example.inhelper.data.local.EurekaTypeConverters
 import com.example.inhelper.data.local.entities.EurekaSet
 
 @Composable
-fun getEurekaPainter(resName: String?): Painter {
+fun getEurekaPainter(resName: String?, type: EurekaType? = null): Painter {
     val context = LocalContext.current
     val imageRes = EurekaTypeConverters.getDrawableRes(context, resName)
     return if (imageRes != 0) {
         painterResource(id = imageRes)
-    } else {
-        painterResource(id = R.drawable.ic_launcher_foreground)
+    } else when(type) {
+        EurekaType.HEAD -> painterResource(id = R.drawable.icon_eureka_head)
+        EurekaType.HAND -> painterResource(id = R.drawable.icon_eureka_hands)
+        EurekaType.FEET -> painterResource(id = R.drawable.icon_eureka_feet)
+        else -> painterResource(id = R.drawable.ic_launcher_foreground)
     }
 }
 

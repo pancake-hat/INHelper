@@ -39,7 +39,7 @@ fun EurekaCardItem(
         Image(
             modifier = Modifier
                 .size(56.dp),
-            painter = getEurekaPainter(resName),
+            painter = getEurekaPainter(resName, type),
             contentDescription = null
         )
         ColorCheckboxListView(

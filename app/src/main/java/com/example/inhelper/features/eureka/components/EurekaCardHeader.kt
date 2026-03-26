@@ -47,7 +47,7 @@ fun EurekaCardHeader(
         }
         Text(
             text = formatEurekaSetName(eurekaSetName),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.weight(1f)
         )
         Row(
