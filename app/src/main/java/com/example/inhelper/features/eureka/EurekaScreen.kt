@@ -58,6 +58,12 @@ fun EurekaScreen(
         uri?.let { viewModel.importFromUri(it, context) }
     }
 
+    val exportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("text/comma-separated-values")
+    ) { uri ->
+        uri?.let { viewModel.exportToUri(it, context) }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -69,6 +75,7 @@ fun EurekaScreen(
                 sortType = sortType,
                 onSortSelected = { viewModel.setSortType(it) },
                 onImportClicked = { importLauncher.launch("text/comma-separated-values") },
+                onExportClicked = { exportLauncher.launch("eureka_tracker_export.csv") },
                 onOpenDrawer = onOpenDrawer,
                 animationController = animationController
             )

@@ -3,6 +3,7 @@ package com.example.inhelper.features.eureka.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRight
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Menu
@@ -37,6 +38,7 @@ fun EurekaScreenTopBar(
     sortType: EurekaSortType,
     onSortSelected: (EurekaSortType) -> Unit,
     onImportClicked: () -> Unit,
+    onExportClicked: () -> Unit,
     onOpenDrawer: () -> Unit,
     animationController: ShakeAnimation
 ) {
@@ -61,7 +63,8 @@ fun EurekaScreenTopBar(
             EurekaSettingsMenuAction(
                 sortType = sortType,
                 onSortSelected = onSortSelected,
-                onImportClicked = onImportClicked
+                onImportClicked = onImportClicked,
+                onExportClicked = onExportClicked
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -96,6 +99,7 @@ private fun EurekaSettingsMenuAction(
     sortType: EurekaSortType,
     onSortSelected: (EurekaSortType) -> Unit,
     onImportClicked: () -> Unit,
+    onExportClicked: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
@@ -151,6 +155,20 @@ private fun EurekaSettingsMenuAction(
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.UploadFile,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            )
+            DropdownMenuItem(
+                text = { Text("Export Eureka CSV") },
+                onClick = {
+                    onExportClicked()
+                    expanded = false
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Download,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )

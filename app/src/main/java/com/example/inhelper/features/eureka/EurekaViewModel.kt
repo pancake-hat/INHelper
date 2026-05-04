@@ -10,6 +10,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.data.repository.EurekaSetRepository
+import com.example.inhelper.features.eureka.domain.ExportEurekaUseCase
 import com.example.inhelper.features.eureka.domain.ImportEurekaUseCase
 import com.example.inhelper.utils.MAX_EUREKA_COUNT_PER_SET
 import com.example.inhelper.workers.SeedDatabaseWorker
@@ -34,8 +35,10 @@ enum class EurekaSortType {
 class EurekaViewModel @Inject internal constructor(
     private val eurekaSetRepository: EurekaSetRepository,
     private val importEurekaUseCase: ImportEurekaUseCase,
+    private val exportEurekaUseCase: ExportEurekaUseCase,
     private val savedStateHandle: SavedStateHandle,
-    @ApplicationContext private val context: Context,
+    @ApplicationContext
+    private val context: Context,
 ) : ViewModel() {
     companion object {
         private const val TAG = "EurekaViewModel"
@@ -93,6 +96,17 @@ class EurekaViewModel @Inject internal constructor(
                 _uiEvent.emit(EurekaUiEvent.ShowToast("Import successful"))
             } else {
                 _uiEvent.emit(EurekaUiEvent.ShowToast("Import failed: ${result.exceptionOrNull()?.message}"))
+            }
+        }
+    }
+
+    fun exportToUri(uri: Uri, context: Context) {
+        viewModelScope.launch {
+            val result = exportEurekaUseCase(context, uri)
+            if (result.isSuccess) {
+                _uiEvent.emit(EurekaUiEvent.ShowToast("Export successful"))
+            } else {
+                _uiEvent.emit(EurekaUiEvent.ShowToast("Export failed: ${result.exceptionOrNull()?.message}"))
             }
         }
     }
