@@ -3,6 +3,7 @@ package com.example.inhelper.utils
 enum class EurekaSetName {
     AFTERGLOW,
     BOOK_OF_LIFE,
+    CLEAR_NIGHT,
     DREAM_WALTZ,
     DISTANT_LAND,
     FIRST_SNOW,
@@ -21,6 +22,7 @@ enum class EurekaSetName {
     SHROOMLING_LULLABY,
     SUNSHOWER_TRIP,
     SWAYING_LOTUS,
+    SWEETHEART_PARTY,
     VOID_HUNT,
     WILD_BLAZE,
 }

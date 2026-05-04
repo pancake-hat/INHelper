@@ -306,5 +306,33 @@
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
+  },
+  {
+    "setName": "SWEETHEART_PARTY",
+    "color1": "PINK",
+    "color2": "GREEN",
+    "color3": "YELLOW",
+    "color4": "RED",
+    "color5": "IRIDESCENT",
+    "headRes": "eureka_head_sweetheart_party_pink",
+    "handsRes": "eureka_hands_sweetheart_party_pink",
+    "feetRes": "eureka_feet_sweetheart_party_pink",
+    "headObtained": [false, false, false, false, false],
+    "handsObtained": [false, false, false, false, false],
+    "feetObtained": [false, false, false, false, false]
+  },
+  {
+    "setName": "CLEAR_NIGHT",
+    "color1": "BLUE",
+    "color2": "YELLOW",
+    "color3": "GREEN",
+    "color4": "PINK",
+    "color5": "IRIDESCENT",
+    "headRes": "eureka_head_clear_night_blue",
+    "handsRes": "eureka_hands_clear_night_blue",
+    "feetRes": "eureka_feet_clear_night_blue",
+    "headObtained": [false, false, false, false, false],
+    "handsObtained": [false, false, false, false, false],
+    "feetObtained": [false, false, false, false, false]
   }
 ]
