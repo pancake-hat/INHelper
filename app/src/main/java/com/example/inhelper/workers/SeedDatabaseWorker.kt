@@ -10,8 +10,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.example.inhelper.data.local.dao.EurekaSetDao
-import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.data.local.dao.EurekaObtainedDao
+import com.example.inhelper.data.local.entities.EurekaObtained
 import com.example.inhelper.utils.EUREKA_SETS_DATA_FILENAME
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit
 class SeedDatabaseWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val eurekaSetDao: EurekaSetDao
+    private val eurekaObtainedDao: EurekaObtainedDao
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -38,10 +38,10 @@ class SeedDatabaseWorker @AssistedInject constructor(
                 Log.d(TAG, "Opening asset file: $filename")
                 applicationContext.assets.open(filename).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
-                        val setType = object : TypeToken<List<EurekaSet>>() {}.type
-                        val setList: List<EurekaSet> = Gson().fromJson(jsonReader, setType)
+                        val setType = object : TypeToken<List<EurekaObtained>>() {}.type
+                        val setList: List<EurekaObtained> = Gson().fromJson(jsonReader, setType)
 
-                        eurekaSetDao.upsertAll(setList)
+                        eurekaObtainedDao.upsertAll(setList)
                         Log.d(TAG, "Database seeding successful.")
                         Result.success()
                     }

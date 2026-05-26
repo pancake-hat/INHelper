@@ -9,18 +9,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.data.local.entities.EurekaObtained
 import com.example.inhelper.features.eureka.EurekaSortType
+import com.example.inhelper.features.eureka.domain.model.EurekaSetName
+import com.example.inhelper.features.eureka.domain.model.EurekaSet
 import com.example.inhelper.ui.theme.INHelperTheme
-import com.example.inhelper.utils.EurekaSetName
-import com.example.inhelper.utils.getPreviewEureka
+import com.example.inhelper.utils.getExampleEurekaSet
 
 @Composable
 fun EurekaListView(
     list: List<EurekaSet>,
     sortType: EurekaSortType,
     modifier: Modifier = Modifier,
-    onEurekaSetChange: (EurekaSet) -> Unit = {}
+    onEurekaSetChange: (EurekaObtained) -> Unit = {}
 ) {
     val listState = rememberLazyListState()
 
@@ -35,10 +36,11 @@ fun EurekaListView(
     ) {
         items(
             items = list,
-            key = { it.setName.name }
-        ) { eureka ->
+            key = { it.info.setName.name }
+        ) { item ->
             EurekaCardView(
-                eurekaSet = eureka,
+                setObtained = item.obtained,
+                setInfo = item.info,
                 onEurekaSetChange = onEurekaSetChange
             )
         }
@@ -48,11 +50,11 @@ fun EurekaListView(
 @Preview(showBackground = true)
 @Composable
 fun EurekaListViewPreview() {
-    val testSet1 = getPreviewEureka()
-    val testSet2 = getPreviewEureka(setName = EurekaSetName.ROSEHEART)
-    val testSet3 = getPreviewEureka(setName = EurekaSetName.RAYPLUME)
+    val testItem1 = getExampleEurekaSet()
+    val testItem2 = getExampleEurekaSet(setName = EurekaSetName.ROSEHEART)
+    val testItem3 = getExampleEurekaSet(setName = EurekaSetName.RAYPLUME)
 
-    val eurekaList = listOf(testSet1, testSet2, testSet3)
+    val eurekaList = listOf(testItem1, testItem2, testItem3)
 
     INHelperTheme {
         EurekaListView(eurekaList, EurekaSortType.ALPHABETICAL)

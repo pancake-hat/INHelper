@@ -1,8 +1,8 @@
 package com.example.inhelper.di
 
 import android.content.Context
-import com.example.inhelper.data.local.EurekaDatabase
-import com.example.inhelper.data.local.dao.EurekaSetDao
+import com.example.inhelper.data.local.EurekaObtainedDatabase
+import com.example.inhelper.data.local.dao.EurekaObtainedDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +15,12 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideEurekaDatabase(@ApplicationContext context: Context): EurekaDatabase {
-        return EurekaDatabase.getInstance(context)
+    fun provideEurekaObtainedDatabase(@ApplicationContext context: Context): EurekaObtainedDatabase {
+        return EurekaObtainedDatabase.getInstance(context)
     }
 
     @Provides
-    fun provideEurekaSetDao(appDatabase: EurekaDatabase): EurekaSetDao {
-        return appDatabase.eurekaSetDao()
+    fun provideEurekaSetObtainedDao(appDatabase: EurekaObtainedDatabase): EurekaObtainedDao {
+        return appDatabase.dao()
     }
 }

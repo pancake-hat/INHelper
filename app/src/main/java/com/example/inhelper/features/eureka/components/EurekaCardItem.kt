@@ -8,27 +8,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.inhelper.data.local.entities.EurekaSet
-import com.example.inhelper.utils.EurekaType
+import com.example.inhelper.data.local.entities.EurekaObtained
+import com.example.inhelper.features.eureka.domain.model.EurekaInfo
+import com.example.inhelper.features.eureka.domain.model.EurekaType
 import com.example.inhelper.utils.getEurekaPainter
 
 @Composable
 fun EurekaCardItem(
     type: EurekaType,
-    eurekaSet: EurekaSet,
-    onEurekaSetChange: (EurekaSet) -> Unit,
-    modifier: Modifier
+    setObtained: EurekaObtained,
+    setInfo: EurekaInfo,
+    onEurekaSetChange: (EurekaObtained) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val itemObtainedArray = when (type) {
-        EurekaType.HEAD -> eurekaSet.headObtained
-        EurekaType.HAND -> eurekaSet.handsObtained
-        EurekaType.FEET -> eurekaSet.feetObtained
+        EurekaType.HEAD -> setObtained.headObtained
+        EurekaType.HAND -> setObtained.handsObtained
+        EurekaType.FEET -> setObtained.feetObtained
     }
 
     val resName = when (type) {
-        EurekaType.HEAD -> eurekaSet.headRes
-        EurekaType.HAND -> eurekaSet.handsRes
-        EurekaType.FEET -> eurekaSet.feetRes
+        EurekaType.HEAD -> setInfo.headRes
+        EurekaType.HAND -> setInfo.handsRes
+        EurekaType.FEET -> setInfo.feetRes
     }
 
     Row(
@@ -43,16 +45,16 @@ fun EurekaCardItem(
             contentDescription = null
         )
         ColorCheckboxListView(
-            eureka = eurekaSet,
+            setInfo = setInfo,
             isObtained = itemObtainedArray.toTypedArray(),
             onCheckedChange = { index, checked ->
                 val updatedItem = itemObtainedArray.copyOf()
                 updatedItem[index] = checked
 
                 when (type) {
-                    EurekaType.HEAD -> onEurekaSetChange(eurekaSet.copy(headObtained = updatedItem))
-                    EurekaType.HAND -> onEurekaSetChange(eurekaSet.copy(handsObtained = updatedItem))
-                    EurekaType.FEET -> onEurekaSetChange(eurekaSet.copy(feetObtained = updatedItem))
+                    EurekaType.HEAD -> onEurekaSetChange(setObtained.copy(headObtained = updatedItem))
+                    EurekaType.HAND -> onEurekaSetChange(setObtained.copy(handsObtained = updatedItem))
+                    EurekaType.FEET -> onEurekaSetChange(setObtained.copy(feetObtained = updatedItem))
                 }
             }
         )

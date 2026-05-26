@@ -1,4 +1,4 @@
-package com.example.inhelper.utils
+package com.example.inhelper.features.eureka.domain.model
 
 enum class EurekaSetName {
     AFTERGLOW,

@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.features.eureka.domain.model.EurekaInfo
 
 @Composable
 fun ColorCheckboxListView(
-    eureka: EurekaSet,
+    setInfo: EurekaInfo,
     modifier: Modifier = Modifier,
     isObtained: Array<Boolean>,
     onCheckedChange: (Int, Boolean) -> Unit
@@ -19,10 +19,10 @@ fun ColorCheckboxListView(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        ColorCheckbox(modifier = modifier, eurekaColor = eureka.color1, checked = isObtained[0], onCheckedChange = { onCheckedChange(0, it) })
-        ColorCheckbox(modifier = modifier, eurekaColor = eureka.color2, checked = isObtained[1], onCheckedChange = { onCheckedChange(1, it) })
-        ColorCheckbox(modifier = modifier, eurekaColor = eureka.color3, checked = isObtained[2], onCheckedChange = { onCheckedChange(2, it) })
-        ColorCheckbox(modifier = modifier, eurekaColor = eureka.color4, checked = isObtained[3], onCheckedChange = { onCheckedChange(3, it) })
-        ColorCheckbox(modifier = modifier, eurekaColor = eureka.color5, checked = isObtained[4], onCheckedChange = { onCheckedChange(4, it) })
+        ColorCheckbox(modifier = modifier, eurekaColor = setInfo.color1, checked = isObtained[0], onCheckedChange = { onCheckedChange(0, it) })
+        ColorCheckbox(modifier = modifier, eurekaColor = setInfo.color2, checked = isObtained[1], onCheckedChange = { onCheckedChange(1, it) })
+        ColorCheckbox(modifier = modifier, eurekaColor = setInfo.color3, checked = isObtained[2], onCheckedChange = { onCheckedChange(2, it) })
+        ColorCheckbox(modifier = modifier, eurekaColor = setInfo.color4, checked = isObtained[3], onCheckedChange = { onCheckedChange(3, it) })
+        ColorCheckbox(modifier = modifier, eurekaColor = setInfo.color5, checked = isObtained[4], onCheckedChange = { onCheckedChange(4, it) })
     }
 }

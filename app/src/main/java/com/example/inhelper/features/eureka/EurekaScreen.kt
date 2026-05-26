@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.inhelper.data.local.entities.EurekaSet
 import com.example.inhelper.features.eureka.components.EurekaListView
 import com.example.inhelper.features.eureka.components.EurekaScreenTopBar
+import com.example.inhelper.features.eureka.domain.model.EurekaSet
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -97,7 +97,7 @@ fun EurekaScreen(
                 modifier = modifier.padding(innerPadding),
                 onEurekaSetChange = {
                     if (!isEurekaLocked) {
-                        viewModel.updateEurekaSet(it)
+                        viewModel.updateEurekaSetObtained(it)
                     } else { // bounce lock icon
                         animationController.applyShakeAnimation()
                     }

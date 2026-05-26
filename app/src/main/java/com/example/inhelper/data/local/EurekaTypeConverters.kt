@@ -2,8 +2,8 @@ package com.example.inhelper.data.local
 
 import android.content.Context
 import androidx.room.TypeConverter
-import com.example.inhelper.utils.EurekaColor
-import com.example.inhelper.utils.EurekaSetName
+import com.example.inhelper.features.eureka.domain.model.EurekaColor
+import com.example.inhelper.features.eureka.domain.model.EurekaSetName
 import com.google.gson.Gson
 
 class EurekaTypeConverters {

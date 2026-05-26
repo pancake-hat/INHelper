@@ -3,7 +3,9 @@ package com.example.inhelper.utils
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.data.local.EurekaRegistry
+import com.example.inhelper.data.local.entities.EurekaObtained
+import com.example.inhelper.features.eureka.domain.model.EurekaSetName
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
@@ -22,22 +24,27 @@ object EurekaCSVImport {
     const val EUREKA_TEMPLATE_JSON_FILE_NAME = "eureka_sets.json"
 
 
-    private class EurekaSetSerializer : JsonSerializer<EurekaSet> {
-        override fun serialize(src: EurekaSet, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+    private class EurekaSetSerializer(private val registry: EurekaRegistry) : JsonSerializer<EurekaObtained> {
+        override fun serialize(src: EurekaObtained, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
             val jsonObject = JsonObject()
-            // Properties should follow same order found in assets/eureka_sets.json
-            jsonObject.addProperty("setName", src.setName.name)
-            jsonObject.add("color1", context.serialize(src.color1))
-            jsonObject.add("color2", context.serialize(src.color2))
-            jsonObject.add("color3", context.serialize(src.color3))
-            jsonObject.add("color4", context.serialize(src.color4))
-            jsonObject.add("color5", context.serialize(src.color5))
-            jsonObject.addProperty("headRes", src.headRes)
-            jsonObject.addProperty("handsRes", src.handsRes)
-            jsonObject.addProperty("feetRes", src.feetRes)
+            val setInfo = registry.getEurekaSetInfo(src.eurekaName)
+
+            jsonObject.addProperty("setName", src.eurekaName.name)
+
+            jsonObject.add("color1", context.serialize(setInfo.color1))
+            jsonObject.add("color2", context.serialize(setInfo.color2))
+            jsonObject.add("color3", context.serialize(setInfo.color3))
+            jsonObject.add("color4", context.serialize(setInfo.color4))
+            jsonObject.add("color5", context.serialize(setInfo.color5))
+
+            jsonObject.addProperty("headRes", setInfo.headRes)
+            jsonObject.addProperty("handsRes", setInfo.handsRes)
+            jsonObject.addProperty("feetRes", setInfo.feetRes)
+
             jsonObject.add("headObtained", context.serialize(src.headObtained))
             jsonObject.add("handsObtained", context.serialize(src.handsObtained))
             jsonObject.add("feetObtained", context.serialize(src.feetObtained))
+
             return jsonObject
         }
     }
@@ -45,9 +52,10 @@ object EurekaCSVImport {
     fun createImportedJsonFile(
         context: Context,
         csvUri: Uri,
+        registry: EurekaRegistry,
         outputFileName: String = IMPORTED_EUREKA_FILE_NAME
     ): String? {
-        val jsonString = convertEurekaCsvToJson(context, csvUri)
+        val jsonString = convertEurekaCsvToJson(context, csvUri, registry)
         
         return try {
             val file = File(context.filesDir, outputFileName)
@@ -70,14 +78,14 @@ object EurekaCSVImport {
     fun readImportedJsonFile(
         context: Context,
         fileName: String = IMPORTED_EUREKA_FILE_NAME
-    ): List<EurekaSet>? {
+    ): List<EurekaObtained>? {
         return try {
             val file = File(context.filesDir, fileName)
             if (!file.exists()) return null
 
             val jsonString = file.readText()
             val gson = Gson()
-            val type = object : TypeToken<List<EurekaSet>>() {}.type
+            val type = object : TypeToken<List<EurekaObtained>>() {}.type
             gson.fromJson(jsonString, type)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to read JSON file: ${e.message}")
@@ -87,26 +95,27 @@ object EurekaCSVImport {
 
     private fun convertEurekaCsvToJson(
         context: Context,
-        csvUri: Uri
+        csvUri: Uri,
+        registry: EurekaRegistry
     ): String {
-        // Force json field order to match EurekaSet
+        // Force json field order to match EurekaSetObtained
         val gson = GsonBuilder()
-            .registerTypeAdapter(EurekaSet::class.java, EurekaSetSerializer())
+            .registerTypeAdapter(EurekaObtained::class.java, EurekaSetSerializer(registry))
             .setPrettyPrinting()
             .create()
             
-        val eurekaMap = mutableMapOf<EurekaSetName, EurekaSet>()
+        val eurekaMap = mutableMapOf<EurekaSetName, EurekaObtained>()
         val originalOrder = mutableListOf<EurekaSetName>()
 
         // Load template JSON (read-only)
         try {
             context.assets.open(EUREKA_TEMPLATE_JSON_FILE_NAME).use { inputStream ->
                 val reader = InputStreamReader(inputStream)
-                val type = object : TypeToken<List<EurekaSet>>() {}.type
-                val existingSets: List<EurekaSet> = gson.fromJson(reader, type)
+                val type = object : TypeToken<List<EurekaObtained>>() {}.type
+                val existingSets: List<EurekaObtained> = gson.fromJson(reader, type)
                 existingSets.forEach { 
-                    eurekaMap[it.setName] = it 
-                    originalOrder.add(it.setName)
+                    eurekaMap[it.eurekaName] = it
+                    originalOrder.add(it.eurekaName)
                 }
             }
         } catch (e: Exception) {
@@ -116,7 +125,7 @@ object EurekaCSVImport {
         // todo: does not check for csv contents, we are assuming it is exported as csv from:
         // https://docs.google.com/spreadsheets/d/1Ak0ezNY42eLiKwCsbqOmSxLYlbSGYAP9W2umM_v9rP4/edit?gid=1116526076
         // eg. exported csv will look like example_eureka_colors_csv.csv
-        try { // parse csv from uri and create updated copies of EurekaSet
+        try { // Parse csv from uri and create updated copies of EurekaSet
             context.contentResolver.openInputStream(csvUri)?.use { inputStream ->
                 BufferedReader(InputStreamReader(inputStream)).use { reader ->
                     reader.readLine() // Skip header

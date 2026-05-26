@@ -6,7 +6,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.inhelper.R
 import com.example.inhelper.data.local.EurekaTypeConverters
-import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.data.local.entities.EurekaObtained
+import com.example.inhelper.features.eureka.domain.model.EurekaColor
+import com.example.inhelper.features.eureka.domain.model.EurekaInfo
+import com.example.inhelper.features.eureka.domain.model.EurekaSetName
+import com.example.inhelper.features.eureka.domain.model.EurekaSet
+import com.example.inhelper.features.eureka.domain.model.EurekaType
 
 @Composable
 fun getEurekaPainter(resName: String?, type: EurekaType? = null): Painter {
@@ -28,28 +33,38 @@ fun formatEurekaSetName(name: String): String {
     }
 }
 
-fun getPreviewEureka(
+fun getExampleEurekaSetObtained(
     setName: EurekaSetName = EurekaSetName.SHROOMLING_LULLABY,
-    color1: EurekaColor = EurekaColor.RED,
-    color2: EurekaColor = EurekaColor.BLUE,
-    color3: EurekaColor = EurekaColor.YELLOW,
-    color4: EurekaColor = EurekaColor.GREEN,
-    color5: EurekaColor = EurekaColor.PURPLE,
-): EurekaSet {
-    val eureka = EurekaSet(
-        setName = setName,
-        color1 = color1,
-        color2 = color2,
-        color3 = color3,
-        color4 = color4,
-        color5 = color5,
-        headRes = null,
-        handsRes = null,
-        feetRes = null,
+): EurekaObtained {
+    return EurekaObtained(
+        eurekaName = setName,
         headObtained = booleanArrayOf(true, true, false, true, true),
         handsObtained = booleanArrayOf(true, true, false, true, true),
         feetObtained = booleanArrayOf(true, false, true, false, true)
     )
+}
 
-    return eureka
+fun getExampleEurekaSetInfo(
+    setName: EurekaSetName = EurekaSetName.SHROOMLING_LULLABY,
+): EurekaInfo {
+    return EurekaInfo(
+        setName = setName,
+        color1 = EurekaColor.RED,
+        color2 = EurekaColor.BLUE,
+        color3 = EurekaColor.YELLOW,
+        color4 = EurekaColor.GREEN,
+        color5 = EurekaColor.IRIDESCENT,
+        headRes = "icon_eureka_head",
+        handsRes = "icon_eureka_hands",
+        feetRes = "icon_eureka_feet"
+    )
+}
+
+fun getExampleEurekaSet(
+    setName: EurekaSetName = EurekaSetName.SHROOMLING_LULLABY,
+): EurekaSet {
+    return EurekaSet(
+        obtained = getExampleEurekaSetObtained(setName),
+        info = getExampleEurekaSetInfo(setName)
+    )
 }

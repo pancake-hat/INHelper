@@ -14,16 +14,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.inhelper.data.local.entities.EurekaSet
+import com.example.inhelper.data.local.entities.EurekaObtained
+import com.example.inhelper.features.eureka.domain.model.EurekaInfo
+import com.example.inhelper.features.eureka.domain.model.EurekaType
 import com.example.inhelper.ui.theme.INHelperTheme
-import com.example.inhelper.utils.EurekaType
-import com.example.inhelper.utils.getPreviewEureka
+import com.example.inhelper.utils.getExampleEurekaSetObtained
+import com.example.inhelper.utils.getExampleEurekaSetInfo
 
 @Composable
 fun EurekaCardView(
-    eurekaSet: EurekaSet,
+    setObtained: EurekaObtained,
+    setInfo: EurekaInfo,
     modifier: Modifier = Modifier,
-    onEurekaSetChange: (EurekaSet) -> Unit = {}
+    onEurekaSetChange: (EurekaObtained) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -34,10 +37,10 @@ fun EurekaCardView(
     ) {
         Column {
             EurekaCardHeader(
-                eurekaSetName = eurekaSet.setName.toString(),
-                obtainedCount = eurekaSet.totalObtainedCount(),
+                eurekaSetName = setInfo.setName.toString(),
+                obtainedCount = setObtained.totalObtainedCount(),
                 expanded = expanded,
-                headRes = eurekaSet.headRes,
+                headRes = setInfo.headRes,
                 onExpandClicked = { expanded = !expanded }
             )
 
@@ -47,9 +50,9 @@ fun EurekaCardView(
                         .padding(start = 8.dp, end = 8.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    EurekaCardItem(EurekaType.HEAD, eurekaSet, onEurekaSetChange, modifier)
-                    EurekaCardItem(EurekaType.HAND, eurekaSet, onEurekaSetChange, modifier)
-                    EurekaCardItem(EurekaType.FEET, eurekaSet, onEurekaSetChange, modifier)
+                    EurekaCardItem(EurekaType.HEAD, setObtained, setInfo, onEurekaSetChange, modifier)
+                    EurekaCardItem(EurekaType.HAND, setObtained, setInfo, onEurekaSetChange, modifier)
+                    EurekaCardItem(EurekaType.FEET, setObtained, setInfo, onEurekaSetChange, modifier)
                 }
             }
         }
@@ -59,9 +62,10 @@ fun EurekaCardView(
 @Preview(showBackground = true)
 @Composable
 fun EurekaCardViewPreview() {
-    val testSet = getPreviewEureka()
+    val testObtained = getExampleEurekaSetObtained()
+    val testInfo = getExampleEurekaSetInfo()
 
     INHelperTheme {
-        EurekaCardView(testSet)
+        EurekaCardView(testObtained, testInfo)
     }
 }

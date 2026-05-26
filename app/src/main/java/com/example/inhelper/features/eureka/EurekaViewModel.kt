@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.example.inhelper.data.local.entities.EurekaSet
-import com.example.inhelper.data.repository.EurekaSetRepository
+import com.example.inhelper.data.local.EurekaRegistry
+import com.example.inhelper.data.local.entities.EurekaObtained
+import com.example.inhelper.data.repository.EurekaObtainedRepository
 import com.example.inhelper.features.eureka.domain.ExportEurekaUseCase
 import com.example.inhelper.features.eureka.domain.ImportEurekaUseCase
+import com.example.inhelper.features.eureka.domain.model.EurekaSet
 import com.example.inhelper.utils.MAX_EUREKA_COUNT_PER_SET
 import com.example.inhelper.workers.SeedDatabaseWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +35,8 @@ enum class EurekaSortType {
 
 @HiltViewModel
 class EurekaViewModel @Inject internal constructor(
-    private val eurekaSetRepository: EurekaSetRepository,
+    private val repository: EurekaObtainedRepository,
+    private val registry: EurekaRegistry,
     private val importEurekaUseCase: ImportEurekaUseCase,
     private val exportEurekaUseCase: ExportEurekaUseCase,
     private val savedStateHandle: SavedStateHandle,
@@ -54,15 +57,20 @@ class EurekaViewModel @Inject internal constructor(
     val uiEvent: SharedFlow<EurekaUiEvent> = _uiEvent
 
     val eurekaList: StateFlow<List<EurekaSet>> = combine(
-        eurekaSetRepository.getEurekaSets(),
+        repository.getEurekasObtainedList(),
         _sortType
     ) { list, sort ->
         if (list.isEmpty()) {
             checkAndSeedDatabase()
         }
+        
+        val mappedList = list.map {
+            EurekaSet(it, registry.getEurekaSetInfo(it.eurekaName))
+        }
+
         when (sort) {
-            EurekaSortType.ALPHABETICAL -> list.sortedBy { it.setName.name }
-            EurekaSortType.OBTAINED -> list.sortedByDescending { it.totalObtainedCount() }
+            EurekaSortType.ALPHABETICAL -> mappedList.sortedBy { it.obtained.eurekaName.name }
+            EurekaSortType.OBTAINED -> mappedList.sortedByDescending { it.obtained.totalObtainedCount() }
         }
     }.stateIn(
         scope = viewModelScope,
@@ -72,7 +80,7 @@ class EurekaViewModel @Inject internal constructor(
 
     private fun checkAndSeedDatabase() {
         viewModelScope.launch {
-            if (eurekaSetRepository.getEurekaSetsCount() == 0) {
+            if (repository.getTotalObtainedCount() == 0) {
                 Log.d(TAG, "Database is empty, enqueuing seed worker")
                 WorkManager.getInstance(context).enqueueUniqueWork(
                     SeedDatabaseWorker.SEED_DATABASE_WORKER_NAME,
@@ -83,9 +91,9 @@ class EurekaViewModel @Inject internal constructor(
         }
     }
 
-    fun updateEurekaSet(eurekaSet: EurekaSet) {
+    fun updateEurekaSetObtained(eurekaObtained: EurekaObtained) {
         viewModelScope.launch {
-            eurekaSetRepository.updateEurekaSet(eurekaSet)
+            repository.updateEurekaObtained(eurekaObtained)
         }
     }
 
@@ -120,7 +128,7 @@ class EurekaViewModel @Inject internal constructor(
     }
 
     fun getTotalEurekasObtained(eurekaList: List<EurekaSet>): Int {
-        return eurekaList.sumOf { it.totalObtainedCount() }
+        return eurekaList.sumOf { it.obtained.totalObtainedCount() }
     }
 
     fun getMaxEurekaObtained(eurekaList: List<EurekaSet>): Int {

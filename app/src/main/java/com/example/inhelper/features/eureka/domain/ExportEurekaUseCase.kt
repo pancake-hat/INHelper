@@ -2,7 +2,7 @@ package com.example.inhelper.features.eureka.domain
 
 import android.content.Context
 import android.net.Uri
-import com.example.inhelper.data.repository.EurekaSetRepository
+import com.example.inhelper.data.repository.EurekaObtainedRepository
 import com.example.inhelper.utils.EurekaCSVExport
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -12,11 +12,11 @@ import java.io.OutputStreamWriter
 import javax.inject.Inject
 
 class ExportEurekaUseCase @Inject constructor(
-    private val repository: EurekaSetRepository
+    private val repository: EurekaObtainedRepository
 ) {
     suspend operator fun invoke(context: Context, uri: Uri): Result<Unit> = withContext(Dispatchers.IO) {
         try {
-            val eurekaSets = repository.getEurekaSets().first()
+            val eurekaSets = repository.getEurekasObtainedList().first()
             val csvString = EurekaCSVExport.generateEurekaCsv(eurekaSets)
             
             context.contentResolver.openOutputStream(uri)?.use { outputStream ->
