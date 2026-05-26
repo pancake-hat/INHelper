@@ -30,7 +30,8 @@ import javax.inject.Inject
 
 enum class EurekaSortType {
     ALPHABETICAL,
-    OBTAINED
+    OBTAINED,
+    VERSION
 }
 
 @HiltViewModel
@@ -65,12 +66,13 @@ class EurekaViewModel @Inject internal constructor(
         }
         
         val mappedList = list.map {
-            EurekaSet(it, registry.getEurekaSetInfo(it.eurekaName))
+            EurekaSet(it, registry.getEurekaSetInfo(it.setName))
         }
 
         when (sort) {
-            EurekaSortType.ALPHABETICAL -> mappedList.sortedBy { it.obtained.eurekaName.name }
+            EurekaSortType.ALPHABETICAL -> mappedList.sortedBy { it.info.setName }
             EurekaSortType.OBTAINED -> mappedList.sortedByDescending { it.obtained.totalObtainedCount() }
+            EurekaSortType.VERSION -> mappedList.sortedByDescending { it.info.version }
         }
     }.stateIn(
         scope = viewModelScope,

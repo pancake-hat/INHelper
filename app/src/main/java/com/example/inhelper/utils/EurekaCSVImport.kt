@@ -27,9 +27,9 @@ object EurekaCSVImport {
     private class EurekaSetSerializer(private val registry: EurekaRegistry) : JsonSerializer<EurekaObtained> {
         override fun serialize(src: EurekaObtained, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
             val jsonObject = JsonObject()
-            val setInfo = registry.getEurekaSetInfo(src.eurekaName)
+            val setInfo = registry.getEurekaSetInfo(src.setName)
 
-            jsonObject.addProperty("setName", src.eurekaName.name)
+            jsonObject.addProperty("setName", src.setName.name)
 
             jsonObject.add("color1", context.serialize(setInfo.color1))
             jsonObject.add("color2", context.serialize(setInfo.color2))
@@ -114,8 +114,8 @@ object EurekaCSVImport {
                 val type = object : TypeToken<List<EurekaObtained>>() {}.type
                 val existingSets: List<EurekaObtained> = gson.fromJson(reader, type)
                 existingSets.forEach { 
-                    eurekaMap[it.eurekaName] = it
-                    originalOrder.add(it.eurekaName)
+                    eurekaMap[it.setName] = it
+                    originalOrder.add(it.setName)
                 }
             }
         } catch (e: Exception) {

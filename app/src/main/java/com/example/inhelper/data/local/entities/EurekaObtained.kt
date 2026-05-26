@@ -9,14 +9,14 @@ import com.example.inhelper.features.eureka.domain.model.EurekaSetName
 data class EurekaObtained(
     @PrimaryKey
     @ColumnInfo(name = "set_name")
-    val eurekaName: EurekaSetName,
+    val setName: EurekaSetName,
 
     val headObtained: BooleanArray = BooleanArray(5) { false },
     val handsObtained: BooleanArray = BooleanArray(5) { false },
     val feetObtained: BooleanArray = BooleanArray(5) { false },
 ) {
     override fun toString(): String {
-        return eurekaName.name
+        return setName.name
     }
 
     fun totalObtainedCount(): Int {
@@ -29,7 +29,7 @@ data class EurekaObtained(
 
         other as EurekaObtained
 
-        if (eurekaName != other.eurekaName) return false
+        if (setName != other.setName) return false
         if (!headObtained.contentEquals(other.headObtained)) return false
         if (!handsObtained.contentEquals(other.handsObtained)) return false
         if (!feetObtained.contentEquals(other.feetObtained)) return false
@@ -38,7 +38,7 @@ data class EurekaObtained(
     }
 
     override fun hashCode(): Int {
-        var result = eurekaName.hashCode()
+        var result = setName.hashCode()
         result = 31 * result + headObtained.contentHashCode()
         result = 31 * result + handsObtained.contentHashCode()
         result = 31 * result + feetObtained.contentHashCode()

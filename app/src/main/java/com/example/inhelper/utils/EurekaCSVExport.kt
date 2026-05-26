@@ -22,7 +22,7 @@ object EurekaCSVExport {
     }
 
     private fun generateRow(set: EurekaObtained, category: String, obtained: BooleanArray): String {
-        val name = formatSetName(set.eurekaName)
+        val name = formatSetName(set.setName)
         val colors = obtained.joinToString(",") { it.toString().uppercase(Locale.ROOT) }
 
         return "$name,$category,,, ,$colors,,,,,,,,,,,\n"

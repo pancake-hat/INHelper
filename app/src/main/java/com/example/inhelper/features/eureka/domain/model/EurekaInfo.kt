@@ -11,5 +11,6 @@ data class EurekaInfo(
 
     val headRes: String? = null,
     val handsRes: String? = null,
-    val feetRes: String? = null
+    val feetRes: String? = null,
+    val version: Float = 1.0f
 )

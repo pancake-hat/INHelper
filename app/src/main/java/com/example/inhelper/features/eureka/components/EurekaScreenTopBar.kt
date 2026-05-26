@@ -145,6 +145,22 @@ private fun EurekaSettingsMenuAction(
                     }
                 }
             )
+            DropdownMenuItem(
+                text = { Text("Sort by version") },
+                onClick = {
+                    onSortSelected(EurekaSortType.VERSION)
+                    expanded = false
+                },
+                leadingIcon = {
+                    if (sortType == EurekaSortType.VERSION) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowRight,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            )
             HorizontalDivider()
             DropdownMenuItem(
                 text = { Text("Import Eureka CSV") },

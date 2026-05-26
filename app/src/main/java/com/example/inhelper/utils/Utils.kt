@@ -37,7 +37,7 @@ fun getExampleEurekaSetObtained(
     setName: EurekaSetName = EurekaSetName.SHROOMLING_LULLABY,
 ): EurekaObtained {
     return EurekaObtained(
-        eurekaName = setName,
+        setName = setName,
         headObtained = booleanArrayOf(true, true, false, true, true),
         handsObtained = booleanArrayOf(true, true, false, true, true),
         feetObtained = booleanArrayOf(true, false, true, false, true)

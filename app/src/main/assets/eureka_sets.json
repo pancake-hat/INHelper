@@ -9,6 +9,7 @@
     "headRes": "eureka_head_first_snow_white",
     "handsRes": "eureka_hands_first_snow_white",
     "feetRes": "eureka_feet_first_snow_white",
+    "version": 1.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -23,6 +24,7 @@
     "headRes": "eureka_head_rayplume_yellow",
     "handsRes": "eureka_hands_rayplume_yellow",
     "feetRes": "eureka_feet_rayplume_yellow",
+    "version": 1.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -37,34 +39,7 @@
     "headRes": "eureka_head_rainbell_green",
     "handsRes": "eureka_hands_rainbell_green",
     "feetRes": "eureka_feet_rainbell_green",
-    "headObtained": [false, false, false, false, false],
-    "handsObtained": [false, false, false, false, false],
-    "feetObtained": [false, false, false, false, false]
-  },
-  {
-    "setName": "VOID_HUNT",
-    "color1": "PURPLE",
-    "color2": "GREEN",
-    "color3": "RED",
-    "color4": "BLUE",
-    "color5": "IRIDESCENT",
-    "headRes": "eureka_head_void_hunt_purple",
-    "handsRes": "eureka_hands_void_hunt_purple",
-    "feetRes": "eureka_feet_void_hunt_purple",
-    "headObtained": [false, false, false, false, false],
-    "handsObtained": [false, false, false, false, false],
-    "feetObtained": [false, false, false, false, false]
-  },
-  {
-    "setName": "ROSEHEART",
-    "color1": "PINK",
-    "color2": "BLUE",
-    "color3": "PURPLE",
-    "color4": "GREEN",
-    "color5": "IRIDESCENT",
-    "headRes": "eureka_head_roseheart_pink",
-    "handsRes": "eureka_hands_roseheart_pink",
-    "feetRes": "eureka_feet_roseheart_pink",
+    "version": 1.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -79,6 +54,22 @@
     "headRes": "eureka_head_afterglow_yellow",
     "handsRes": "eureka_hands_afterglow_yellow",
     "feetRes": "eureka_feet_afterglow_yellow",
+    "version": 1.0,
+    "headObtained": [false, false, false, false, false],
+    "handsObtained": [false, false, false, false, false],
+    "feetObtained": [false, false, false, false, false]
+  },
+  {
+    "setName": "VOID_HUNT",
+    "color1": "PURPLE",
+    "color2": "GREEN",
+    "color3": "RED",
+    "color4": "BLUE",
+    "color5": "IRIDESCENT",
+    "headRes": "eureka_head_void_hunt_purple",
+    "handsRes": "eureka_hands_void_hunt_purple",
+    "feetRes": "eureka_feet_void_hunt_purple",
+    "version": 1.2,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -93,6 +84,7 @@
     "headRes": "eureka_head_dream_waltz_pink",
     "handsRes": "eureka_hands_dream_waltz_pink",
     "feetRes": "eureka_feet_dream_waltz_pink",
+    "version": 1.2,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -107,6 +99,7 @@
     "headRes": "eureka_head_moonlit_ode_white",
     "handsRes": "eureka_hands_moonlit_ode_white",
     "feetRes": "eureka_feet_moonlit_ode_white",
+    "version": 1.2,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -121,6 +114,22 @@
     "headRes": "eureka_head_misty_waves_blue",
     "handsRes": "eureka_hands_misty_waves_blue",
     "feetRes": "eureka_feet_misty_waves_blue",
+    "version": 1.2,
+    "headObtained": [false, false, false, false, false],
+    "handsObtained": [false, false, false, false, false],
+    "feetObtained": [false, false, false, false, false]
+  },
+  {
+    "setName": "ROSEHEART",
+    "color1": "PINK",
+    "color2": "BLUE",
+    "color3": "PURPLE",
+    "color4": "GREEN",
+    "color5": "IRIDESCENT",
+    "headRes": "eureka_head_roseheart_pink",
+    "handsRes": "eureka_hands_roseheart_pink",
+    "feetRes": "eureka_feet_roseheart_pink",
+    "version": 1.5,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -135,6 +144,7 @@
     "headRes": "eureka_head_swaying_lotus_yellow",
     "handsRes": "eureka_hands_swaying_lotus_yellow",
     "feetRes": "eureka_feet_swaying_lotus_yellow",
+    "version": 1.5,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -149,6 +159,7 @@
     "headRes": "eureka_head_flitterfin_blue",
     "handsRes": "eureka_hands_flitterfin_blue",
     "feetRes": "eureka_feet_flitterfin_blue",
+    "version": 1.5,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -163,6 +174,7 @@
     "headRes": "eureka_head_wild_blaze_pink",
     "handsRes": "eureka_hands_wild_blaze_pink",
     "feetRes": "eureka_feet_wild_blaze_pink",
+    "version": 1.5,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -177,6 +189,7 @@
     "headRes": "eureka_head_moon_lotus_purple",
     "handsRes": "eureka_hands_moon_lotus_purple",
     "feetRes": "eureka_feet_moon_lotus_purple",
+    "version": 1.8,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -191,6 +204,7 @@
     "headRes": "eureka_head_inky_shadow_white",
     "handsRes": "eureka_hands_inky_shadow_white",
     "feetRes": "eureka_feet_inky_shadow_white",
+    "version": 1.8,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -205,6 +219,7 @@
     "headRes": "eureka_head_sunshower_trip_pink",
     "handsRes": "eureka_hands_sunshower_trip_pink",
     "feetRes": "eureka_feet_sunshower_trip_pink",
+    "version": 1.8,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -219,6 +234,7 @@
     "headRes": "eureka_head_book_of_life_green",
     "handsRes": "eureka_hands_book_of_life_green",
     "feetRes": "eureka_feet_book_of_life_green",
+    "version": 1.8,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -233,6 +249,7 @@
     "headRes": "eureka_head_oracle_flame_yellow",
     "handsRes": "eureka_hands_oracle_flame_yellow",
     "feetRes": "eureka_feet_oracle_flame_yellow",
+    "version": 2.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -247,6 +264,7 @@
     "headRes": "eureka_head_icy_edge_blue",
     "handsRes": "eureka_hands_icy_edge_blue",
     "feetRes": "eureka_feet_icy_edge_blue",
+    "version": 2.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -261,6 +279,7 @@
     "headRes": "eureka_head_lunar_astrolabe_purple",
     "handsRes": "eureka_hands_lunar_astrolabe_purple",
     "feetRes": "eureka_feet_lunar_astrolabe_purple",
+    "version": 2.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -275,6 +294,7 @@
     "headRes": "eureka_head_shroomling_lullaby_yellow",
     "handsRes": "eureka_hands_shroomling_lullaby_yellow",
     "feetRes": "eureka_feet_shroomling_lullaby_yellow",
+    "version": 2.0,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -289,6 +309,7 @@
     "headRes": "eureka_head_distant_land_green",
     "handsRes": "eureka_hands_distant_land_green",
     "feetRes": "eureka_feet_distant_land_green",
+    "version": 2.2,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -303,6 +324,7 @@
     "headRes": "eureka_head_mortal_farewell_green",
     "handsRes": "eureka_hands_mortal_farewell_green",
     "feetRes": "eureka_feet_mortal_farewell_green",
+    "version": 2.2,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -317,6 +339,7 @@
     "headRes": "eureka_head_sweetheart_party_pink",
     "handsRes": "eureka_hands_sweetheart_party_pink",
     "feetRes": "eureka_feet_sweetheart_party_pink",
+    "version": 2.5,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
@@ -331,6 +354,7 @@
     "headRes": "eureka_head_clear_night_blue",
     "handsRes": "eureka_hands_clear_night_blue",
     "feetRes": "eureka_feet_clear_night_blue",
+    "version": 2.5,
     "headObtained": [false, false, false, false, false],
     "handsObtained": [false, false, false, false, false],
     "feetObtained": [false, false, false, false, false]
